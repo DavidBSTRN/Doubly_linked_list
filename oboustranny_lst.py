@@ -228,27 +228,30 @@ class DoubleList():
 
     def insertion_sort(self):
         current = self.head
-
+        # go through the list
         while current is not None:
             next_node = current.get_next()
-
+            # take the element to th right position
             while next_node is not None and next_node.get_prev() is not None and next_node.get_prev().get_data() > next_node.get_data():
                 temp = next_node.get_data()
                 next_node.set_data(next_node.get_prev().get_data())
                 next_node.get_prev().set_data(temp)
+
                 next_node = next_node.get_prev()
 
             current = current.get_next()
 
     def partition(self, left, right):
+        """Divide to left and right side"""
+        # manually set pivot as last data in list
         pivot = right
         index = left.get_prev()
         current = left
 
-        while current != right:
+        while current != right: # go through the whole list
             # print("====")
             # self.print_list()
-            if current.get_data() <= pivot.get_data():
+            if current.get_data() <= pivot.get_data(): # swap data and increase pointer (index)
                 if index is None:
                     index = left
                 else:
@@ -260,6 +263,7 @@ class DoubleList():
 
             current = current.get_next()
 
+        # swap pivot with index
         if index is None:
             index = left
         else:
@@ -272,26 +276,30 @@ class DoubleList():
         return index
 
     def quick_sort(self, left = None, right = None):
+        """Quick sort by recursion"""
         if left is None and right is None:
             left =  self.head
             right = self.tail
 
         if right is not None and left != right and left != right.get_next():
-            pivot = self.partition(left, right)
-            self.quick_sort(left, pivot.get_prev())
-            self.quick_sort(pivot.get_next(), right)
+            pivot = self.partition(left, right) # divide to left and right side
+            self.quick_sort(left, pivot.get_prev()) # sort left side
+            self.quick_sort(pivot.get_next(), right) # sort right side
 
 lst = DoubleList()
 lst.push(8)
 lst.push(2)
 lst.push(9)
 lst.push(3)
-lst.push(5)
-lst.push(1)
+lst.push(12)
+lst.push(14)
 lst.push(5)
 
 
 lst.print_list()
 print("======")
 lst.quick_sort()
+lst.print_list()
+print("======")
+lst.insertion_sort()
 lst.print_list()
