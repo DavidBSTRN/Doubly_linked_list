@@ -245,7 +245,7 @@ class DoubleList():
         index = left.get_prev()
         current = left
 
-        while current != right.get_next():
+        while current != right:
             if current.get_data() <= pivot:
                 if index is None:
                     index = left
@@ -256,6 +256,14 @@ class DoubleList():
                 current.set_data(temp)
 
             current = current.get_next()
+
+        if index is None:
+            index = left
+        else:
+            index = index.get_next()
+        tmp = index.get_data()
+        index.set_data(right.get_data())
+        right.set_data(tmp)
 
         return index
 
