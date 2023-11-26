@@ -241,16 +241,19 @@ class DoubleList():
             current = current.get_next()
 
     def partition(self, left, right):
-        pivot = right.get_data()
+        pivot = right
         index = left.get_prev()
         current = left
 
         while current != right:
-            if current.get_data() <= pivot:
+            # print("====")
+            # self.print_list()
+            if current.get_data() <= pivot.get_data():
                 if index is None:
                     index = left
                 else:
                     index = index.get_next()
+
                 temp = index.get_data()
                 index.set_data(current.get_data())
                 current.set_data(temp)
@@ -261,34 +264,34 @@ class DoubleList():
             index = left
         else:
             index = index.get_next()
+
         tmp = index.get_data()
         index.set_data(right.get_data())
         right.set_data(tmp)
 
         return index
 
-    def quick_sort(self, left, right):
+    def quick_sort(self, left = None, right = None):
+        if left is None and right is None:
+            left =  self.head
+            right = self.tail
+
         if right is not None and left != right and left != right.get_next():
             pivot = self.partition(left, right)
             self.quick_sort(left, pivot.get_prev())
             self.quick_sort(pivot.get_next(), right)
 
 lst = DoubleList()
-lst.push(9)
-lst.push(7)
-lst.push(16)
-lst.push(11)
-lst.push(2)
-lst.push(6)
-lst.push(5)
-lst.push(3)
-lst.push(25)
-lst.push(35)
-lst.push(2)
-lst.push(3)
 lst.push(8)
+lst.push(2)
+lst.push(9)
+lst.push(3)
+lst.push(5)
+lst.push(1)
+lst.push(5)
+
 
 lst.print_list()
 print("======")
-lst.quick_sort(lst.head, lst.tail)
+lst.quick_sort()
 lst.print_list()
