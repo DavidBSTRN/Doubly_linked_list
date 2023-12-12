@@ -111,6 +111,7 @@ class DoubleList():
 
         self.size -= 1
 
+    # DU - smazat vsechny odpovidajici symboly
     def remove_symbol(self, symbol_to_remove):
         """Remove all same data you want"""
         current = self.head
@@ -151,10 +152,10 @@ class DoubleList():
                 break
             else:
                 current = current.get_next()
-        # prvek tam neni
+
         if current is None:
             raise ValueError("Vichr z hor")
-        # je to na konci
+
         new_node = Node(input)
         if current.get_next() is None:
             self.tail.set_next(new_node)
@@ -201,6 +202,9 @@ class DoubleList():
 
     def insert_list_after(self, list_to_add, after):
         """Insert list after data of your choice"""
+        if self.head is None or list_to_add.head is None:
+            raise ValueError("Vichr z  hor")
+
         insert_list = DoubleList()
         insert_list.copy(list_to_add)
 
@@ -228,11 +232,12 @@ class DoubleList():
 
     def insertion_sort(self):
         current = self.head
-        # go through the list
+
         while current is not None:
             next_node = current.get_next()
-            # take the element to th right position
-            while next_node is not None and next_node.get_prev() is not None and next_node.get_prev().get_data() > next_node.get_data():
+
+            while next_node is not None and next_node.get_prev() is not None \
+                    and next_node.get_prev().get_data() > next_node.get_data():
                 temp = next_node.get_data()
                 next_node.set_data(next_node.get_prev().get_data())
                 next_node.get_prev().set_data(temp)
@@ -243,15 +248,14 @@ class DoubleList():
 
     def partition(self, left, right):
         """Divide to left and right side"""
-        # manually set pivot as last data in list
+
         pivot = right
         index = left.get_prev()
         current = left
 
-        while current != right: # go through the whole list
-            # print("====")
-            # self.print_list()
-            if current.get_data() <= pivot.get_data(): # swap data and increase pointer (index)
+        while current != right:
+
+            if current.get_data() <= pivot.get_data():
                 if index is None:
                     index = left
                 else:
@@ -263,7 +267,6 @@ class DoubleList():
 
             current = current.get_next()
 
-        # swap pivot with index
         if index is None:
             index = left
         else:
@@ -282,24 +285,6 @@ class DoubleList():
             right = self.tail
 
         if right is not None and left != right and left != right.get_next():
-            pivot = self.partition(left, right) # divide to left and right side
-            self.quick_sort(left, pivot.get_prev()) # sort left side
-            self.quick_sort(pivot.get_next(), right) # sort right side
-
-lst = DoubleList()
-lst.push(8)
-lst.push(2)
-lst.push(9)
-lst.push(3)
-lst.push(12)
-lst.push(14)
-lst.push(5)
-
-
-lst.print_list()
-print("======")
-lst.quick_sort()
-lst.print_list()
-print("======")
-lst.insertion_sort()
-lst.print_list()
+            pivot = self.partition(left, right)
+            self.quick_sort(left, pivot.get_prev())
+            self.quick_sort(pivot.get_next(), right)
