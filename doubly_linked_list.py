@@ -86,7 +86,7 @@ class DoubleList():
                 current = current.get_next()
 
         if current is None:
-            raise ValueError("Vichr z hor")
+            raise ValueError("Error")
 
         if current is self.head:
             next_node = current.get_next()
@@ -154,7 +154,7 @@ class DoubleList():
                 current = current.get_next()
 
         if current is None:
-            raise ValueError("Vichr z hor")
+            raise ValueError("Error")
 
         new_node = Node(input)
         if current.get_next() is None:
@@ -203,7 +203,7 @@ class DoubleList():
     def insert_list_after(self, list_to_add, after):
         """Insert list after data of your choice"""
         if self.head is None or list_to_add.head is None:
-            raise ValueError("Vichr z  hor")
+            raise ValueError("Error")
 
         insert_list = DoubleList()
         insert_list.copy(list_to_add)
@@ -217,7 +217,7 @@ class DoubleList():
                 current = current.get_next()
 
         if current is None:
-            raise ValueError("Vichr z  hor")
+            raise ValueError("Error")
 
         if current.get_next() is None:
             self.add_list(insert_list)
